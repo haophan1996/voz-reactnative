@@ -1,15 +1,18 @@
 import { View, Text, StyleSheet, SectionList, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { fetchSubitem } from './data/services';
-import { useRouter, useLocalSearchParams, useNavigation } from 'expo-router';
-import { Link } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { Link } from 'expo-router'; 
+import { useThemeMode } from './theme/useThemeMode';
+import createStyles from './theme/stylesheet';  
 
 export default function subitem() {
     const navigation = useNavigation();
     const { appbartitle, linksubitem } = useLocalSearchParams<{ appbartitle: string, linksubitem: string }>();
     const [data, setdata] = useState<any>(null);
     const [loading, setLoading] = useState<any>(true);
-    const [error, setError] = useState<any>('')
+    const [error, setError] = useState<any>('') 
+    const styles = createStyles(useThemeMode());
 
 
     const loadData = async () => {
@@ -57,14 +60,13 @@ export default function subitem() {
                         pathname: '/sub_item',
                         params: { appbartitle: item.title, linksubitem: item.link }
                     }} style={styles.itemText}>
-                        <Text style={styles.itemlabel}>{item.label}</Text>
+                        <Text style={styles.itemLabel}>{item.label}</Text>
                         <Text style={styles.itemTitle}>{item.title} {"\n"}</Text>
                         {
                             item.is_thread ?
                                 <Text style={styles.itemMeta}>Replies: {item.replies_count} 🗨️ {item.last_time_username_replies}◽{item.last_time_replies}</Text> :
                                 <Text style={styles.itemMeta}>Threads: {item.thread} ● Messages: {item.messages}</Text>
-                        }
-
+                        } 
                     </Link>
                 )}
                 renderSectionHeader={({ section }) => (
@@ -77,27 +79,48 @@ export default function subitem() {
 
 
 
-const styles = StyleSheet.create({
-    itemTitle: {
-        alignItems: "center",
-        fontSize: 16,
-        color: '#007BFF',
-    },
-    itemMeta: {
-        fontSize: 14,
-    },
-    headerText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        padding: 10,
-    },
-    itemText: {
-        padding: 5,
-        paddingLeft: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-    },
-    itemlabel: {
-        color: "#FFCC00"
-    }
-});
+// const createStyles = (theme) =>
+//     StyleSheet.create({
+//         container: {
+//             flex: 1,
+//             backgroundColor: theme.background,
+//         },
+//         centered: {
+//             flex: 1,
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//             backgroundColor: theme.background,
+//         },
+//         itemTitle: {
+//             alignItems: 'center',
+//             fontSize: 16,
+//             color: theme.primary,
+//         },
+//         itemMeta: {
+//             fontSize: 14,
+//             color: theme.text,
+//         },
+//         headerText: {
+//             fontSize: 18,
+//             fontWeight: 'bold',
+//             paddingLeft: 5,
+//             paddingTop: 1,
+//             paddingBottom: 1,
+//             backgroundColor: theme.secondary,
+//             color: theme.text,
+//         },
+//         itemText: {
+//             padding: 5,
+//             paddingLeft: 20,
+//             borderBottomWidth: 1,
+//             borderBottomColor: theme.secondary,
+//         },
+//         itemLabel: {
+//             fontSize: 14,
+    //         color: theme.text,
+    //     },
+    //     errorText: {
+    //         color: theme.text,
+    //         fontSize: 16,
+    //     },
+    // });
