@@ -24,7 +24,7 @@ interface Threaditem {
     is_thread: true
 }
 
-export const fetchHomePage = async () => {
+const fetchHomePage = async () => {
     console.log("Processing homepage");
 
     let data: {
@@ -66,7 +66,7 @@ export const fetchHomePage = async () => {
 };
 
 
-export const fetchSubitem = async (sub_link: string) => {
+const fetchSubitem = async (sub_link: string) => {
     try {
         console.log("Processing subitem")
 
@@ -132,3 +132,7 @@ export const fetchSubitem = async (sub_link: string) => {
         throw new Error("Failed to fetch subitem data");
     }
 }
+
+
+export default fetchHomePage;  // Default export
+export { fetchSubitem };  // Named export

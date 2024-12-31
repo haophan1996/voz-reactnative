@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchSubitem } from './data/services';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { Link } from 'expo-router'; 
-import { useThemeMode } from './theme/useThemeMode';
-import createStyles from './theme/stylesheet';  
+import useThemeMode from './theme/useThemeMode'; 
+import createStyles from './theme/stylesheet';   
 
 export default function subitem() {
     const navigation = useNavigation();
@@ -12,8 +12,7 @@ export default function subitem() {
     const [data, setdata] = useState<any>(null);
     const [loading, setLoading] = useState<any>(true);
     const [error, setError] = useState<any>('') 
-    const styles = createStyles(useThemeMode());
-
+    const styles = createStyles(useThemeMode()); 
 
     const loadData = async () => {
         try {
@@ -51,7 +50,7 @@ export default function subitem() {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View >
             <SectionList
                 sections={data} // This should be an array of sections, each with a 'data' array
                 keyExtractor={(item, index) => item.title + index} // Use item.title for unique key
@@ -76,51 +75,4 @@ export default function subitem() {
         </View>
     );
 };
-
-
-
-// const createStyles = (theme) =>
-//     StyleSheet.create({
-//         container: {
-//             flex: 1,
-//             backgroundColor: theme.background,
-//         },
-//         centered: {
-//             flex: 1,
-//             justifyContent: 'center',
-//             alignItems: 'center',
-//             backgroundColor: theme.background,
-//         },
-//         itemTitle: {
-//             alignItems: 'center',
-//             fontSize: 16,
-//             color: theme.primary,
-//         },
-//         itemMeta: {
-//             fontSize: 14,
-//             color: theme.text,
-//         },
-//         headerText: {
-//             fontSize: 18,
-//             fontWeight: 'bold',
-//             paddingLeft: 5,
-//             paddingTop: 1,
-//             paddingBottom: 1,
-//             backgroundColor: theme.secondary,
-//             color: theme.text,
-//         },
-//         itemText: {
-//             padding: 5,
-//             paddingLeft: 20,
-//             borderBottomWidth: 1,
-//             borderBottomColor: theme.secondary,
-//         },
-//         itemLabel: {
-//             fontSize: 14,
-    //         color: theme.text,
-    //     },
-    //     errorText: {
-    //         color: theme.text,
-    //         fontSize: 16,
-    //     },
-    // });
+ 

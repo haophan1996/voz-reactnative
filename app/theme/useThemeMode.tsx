@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Appearance } from 'react-native';
-import { Theme, lightTheme, darkTheme } from './theme';
+import Theme from './themeTypes'; // Import the interface
+import { lightTheme, darkTheme } from './theme'; // Import the theme
 
-export const useThemeMode = (): Theme => {
+const useThemeMode = () => {
   const [theme, setTheme] = useState<Theme>(
     Appearance.getColorScheme() === 'dark' ? darkTheme : lightTheme
   );
@@ -12,7 +13,9 @@ export const useThemeMode = (): Theme => {
       setTheme(colorScheme === 'dark' ? darkTheme : lightTheme);
     });
     return () => listener.remove();
-  }, []);
-
+  }, []); 
+ 
   return theme;
 };
+
+export default useThemeMode;

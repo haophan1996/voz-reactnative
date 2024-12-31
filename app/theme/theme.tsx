@@ -1,20 +1,22 @@
-export interface Theme {
-    background: string;
-    text: string;
-    primary: string;
-    secondary: string;
-}
+import Theme from './themeTypes';
 
 export const lightTheme: Theme = {
+    mode: 'light',
     background: '#ffffff',
     text: '#000000',
     primary: '#6200ee',
-    secondary: '#03dac6',
+    secondary: '#007BFF',
+    sectionSeperator: 'rgba(0, 0, 0, 0.3)',
 };
 
 export const darkTheme: Theme = {
-    background: '#121212',
+    mode: 'dark',
+    background: '#000000',
     text: '#ffffff',
     primary: '#bb86fc',
-    secondary: '#03dac6',
+    secondary: '#007BFF',
+    sectionSeperator: 'rgba(90, 90, 90, 0.71)',
 };
+
+// Exporting both themes separately and the interface for types 
+export default { lightTheme, darkTheme };
