@@ -5,4 +5,5 @@ export default interface Theme {
     primary: string;
     secondary: string;
     sectionSeperator: string;
-} 
+    title_ticky: string;
+}

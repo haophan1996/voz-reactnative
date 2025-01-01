@@ -67,6 +67,7 @@ const fetchHomePage = async () => {
 
 
 const fetchSubitem = async (sub_link: string) => {
+    console.log(url_main+sub_link)
     try {
         console.log("Processing subitem")
 
@@ -80,16 +81,16 @@ const fetchSubitem = async (sub_link: string) => {
             content: { 
                 data: { title: string; data: (Subitem | Threaditem)[] }[];
             };
-            bla: number;
-            page: string;
+            max_page: number;
+            current_page: number;
         } = {
             content: { 
                 data: []
             },
-            bla: 1, // Add your custom properties here
-            page: ""
+            max_page: 1, // Add your custom properties here
+            current_page: 1
         };
-
+ 
         const subitems = root.querySelectorAll('.node--depth2.node--forum')
         const sectionData: Subitem[] = [];
         const threaditem: Threaditem[] = [];
@@ -134,6 +135,11 @@ const fetchSubitem = async (sub_link: string) => {
             })
         }
 
+        const max_page = root.querySelector(".js-numberBoxTextInput.input.input--numberNarrow.js-pageJumpPage")?.getAttribute('max') ?? '1'
+        const current_page = root?.querySelector('.pageNav-page.pageNav-page--current')?.text.trim() ?? '1'
+         
+        data.max_page = Number(max_page)
+        data.current_page = Number(current_page)
         data.content.data.push({ title: 'Threads', data: threaditem});  
         return data
     } catch (error) {

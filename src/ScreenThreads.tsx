@@ -1,11 +1,10 @@
 import { View, Text, SectionList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { fetchSubitem } from './data/services';
-import { useNavigation, useRoute } from '@react-navigation/native'; // Use React Navigation 
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'; // Use React Navigation 
 import useThemeMode from './theme/useThemeMode';
 import createStyles from './theme/stylesheet';
-import { RootStackParamList, navigationProps } from './type'; // Import the route params type
-import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList, navigationProps } from './type'; // Import the route params type 
 
 type SubItemRouteProp = RouteProp<RootStackParamList, 'ScreenThreads'>;
 
@@ -19,8 +18,7 @@ export default function SubItem() {
     const [error, setError] = useState<string>('');
     const styles = createStyles(useThemeMode());
 
-    const loadData = async () => {
-
+    const loadData = async () => { 
         try {
             const result = await fetchSubitem(linksubitem);
             setData(result);
@@ -32,8 +30,13 @@ export default function SubItem() {
         }
     };
 
-    useEffect(() => { 
-        if (loading) loadData(); 
+    const pullupevent = async () => {
+        console.log('sacsacascsaaaaaaaaaaaa')
+    }
+
+    useEffect(() => {
+        if (loading)
+            loadData();
     }, [navigation, appbartitle, loading]);
     if (loading) {
         return (
@@ -53,13 +56,12 @@ export default function SubItem() {
 
     return (
         <View style={styles.backgroundcolor}>
-            <SectionList
+            <SectionList 
                 sections={data.content.data} // This should be an array of sections, each with a 'data' array
                 keyExtractor={(item, index) => item.title + index} // Use item.title for unique key
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => {
-                            // Navigate to "SubItem" screen and pass parameters
                             navigation.push('ScreenThreads', {
                                 itemId: 2,
                                 appbartitle: item.title,
@@ -67,19 +69,23 @@ export default function SubItem() {
                             });
                         }}
                         style={styles.itemText}>
-                        <Text style={styles.itemLabel}>{item.label}<Text style={styles.itemTitle}>{item.title} {"\n"}</Text></Text>
-                        {
-                            item.is_thread ?
-                                <Text style={styles.itemMeta}>Replies: {item.replies_count} 🗨️ {item.last_time_username_replies} ◽ {item.last_time_replies}</Text> :
-                                <Text style={styles.itemMeta}>Threads: {item.thread} ● Messages: {item.messages}</Text>
 
+                        <Text style={styles.itemLabel}>{item.label}<Text style={item.is_sticky ? styles.itemTitleSticky : styles.itemTitle}>{item.title} {"\n"}</Text></Text>
+                        {item.is_thread ?
+                            <Text style={styles.itemMeta}>Replies: {item.replies_count} 🗨️ {item.last_time_username_replies} ◽ {item.last_time_replies}</Text> :
+                            <Text style={styles.itemMeta}>Threads: {item.thread} ● Messages: {item.messages}</Text>
                         }
                     </TouchableOpacity>
                 )}
                 renderSectionHeader={({ section }) => (
                     <Text style={styles.headerText}>{section.title}</Text> // Access section.title
-                )}
+                )} 
+                alwaysBounceVertical={true}
+                alwaysBounceHorizontal={true}
             />
+            {/* <View style={styles.bottomVew}>
+                <Text style={styles.itemTitle}>{data.current_page} of {data.max_page}</Text>
+            </View> */}
         </View>
     );
 };
