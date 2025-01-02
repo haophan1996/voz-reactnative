@@ -1,13 +1,14 @@
-import { View, Text, StyleSheet, SectionList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, SectionList, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import fetchHomePage from "./data/services"
+import fetchHomePage from './data/services';
 import createStyles from './theme/stylesheet';
 import useThemeMode from './theme/useThemeMode';
-import { navigationProps } from './type'
+import { navigationProps } from './type';
 import { useNavigation } from '@react-navigation/native';
-
-// The screen component
-export default function Index() { 
+import LoadingScreen from './components/ScreenLoading';
+import ErrorScreen from './components/ScreenError';
+ 
+export default function Index() {
     const [data, setData] = useState<any>(null); // Store fetched data
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string>(''); // Error state
@@ -19,7 +20,7 @@ export default function Index() {
             const result = await fetchHomePage();
             setData(result);
         } catch (err) {
-            console.log(err)
+            console.log(err);
             setError(String(err));
         } finally {
             setLoading(false);
@@ -27,25 +28,13 @@ export default function Index() {
     };
 
     useEffect(() => {
-        if (loading == true)
-            loadData();
-    }, []);
+        if (loading === true)
+            {loadData();}
+    }, [loading]);
 
-    if (loading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
-        );
-    }
+    if (loading) {return <LoadingScreen/>;}
 
-    if (error) {
-        return (
-            <View>
-                <Text>{error}</Text>
-            </View>
-        );
-    }
+    if (error) {return <ErrorScreen error={error}/>;}
 
     return (
         <View>
@@ -63,8 +52,8 @@ export default function Index() {
                             });
                         }}
 
-                        style={styles.itemText}>
-                        <Text style={styles.itemTitle}>{item.title} {"\n"}</Text>
+                        style={styles.container}>
+                        <Text style={styles.itemTitle}>{item.title}</Text>
                         <Text style={styles.itemMeta}>Threads: {item.thread} ● Messages: {item.messages}</Text>
                     </TouchableOpacity>
                 )}

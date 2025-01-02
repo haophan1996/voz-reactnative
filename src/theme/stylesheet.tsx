@@ -6,11 +6,12 @@ const createStyles = (theme: Theme) =>
     itemTitle: {
       fontSize: 16,
       color: theme.secondary,
+      paddingBottom: 5,
     },
     itemTitleSticky: {
       fontSize: 16,
       color: theme.title_ticky,
-      fontWeight: "bold"
+      fontWeight: 'bold'
     },
     itemMeta: {
       fontSize: 14,
@@ -25,7 +26,7 @@ const createStyles = (theme: Theme) =>
       backgroundColor: theme.sectionSeperator,
       color: theme.text,
     },
-    itemText: {
+    container: {
       padding: 5,
       paddingLeft: 20,
       borderBottomWidth: 1,
@@ -34,6 +35,7 @@ const createStyles = (theme: Theme) =>
     itemLabel: {
       fontSize: 14,
       color: theme.text,
+      paddingBottom: 5,
       // borderColor: theme.text, 
       // borderWidth:1, 
       // borderRadius: 2,
@@ -42,7 +44,7 @@ const createStyles = (theme: Theme) =>
     },
     backgroundcolor: {
       flex: 1,
-      backgroundColor: theme.background
+      backgroundColor: theme.background,
     },
     bottomVew: {
       position: 'absolute',
@@ -55,7 +57,7 @@ const createStyles = (theme: Theme) =>
       padding: 15,
       borderTopLeftRadius: 5,
       borderTopRightRadius: 5,
-    }
+    },
   });
 
 export default createStyles;

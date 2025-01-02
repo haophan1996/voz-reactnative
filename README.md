@@ -6,6 +6,15 @@
    - download modules: npm i
    - start project: npx react-native start
 
+   ## cannt run app on android
+   - Download android studio and open android by studio to run all require modules
+   ## iOS
+   - download xcode, 
+   - brew install/upgrade cocoapods
+   - cd to iOS run: 
+   - pod setup
+   - pod install
+   
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
