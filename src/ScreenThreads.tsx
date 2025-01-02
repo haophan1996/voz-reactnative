@@ -15,7 +15,7 @@ export default function SubItem() {
     const navigation = useNavigation<navigationProps>();
     const route = useRoute<SubItemRouteProp>();
     const { linksubitem } = route.params;
-
+    const [isloadingMore, setloadingmore] = useState<boolean>(false);
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
@@ -44,9 +44,23 @@ export default function SubItem() {
 
     if (error) { return <ErrorScreen error={error} />; }
 
+    const handleScroll = (event: any) => {
+        const { contentSize, layoutMeasurement, contentOffset } = event.nativeEvent;
+        const scrollBeyond = contentOffset.y + layoutMeasurement.height - contentSize.height;
+ 
+        if (scrollBeyond > 150){
+            console.log("release", scrollBeyond);
+            setloadingmore(true);
+        } else {
+            setloadingmore(false);
+        }
+    };
+
+
     return (
         <View style={styles.backgroundcolor}>
             <SectionList
+                onScroll={handleScroll}
                 sections={data.content.data} // This should be an array of sections, each with a 'data' array
                 keyExtractor={(item, index) => item.title + index} // Use item.title for unique key
                 renderItem={({ item }) => (
@@ -72,6 +86,7 @@ export default function SubItem() {
                 )}
             />
             <View style={styles.bottomVew}>
+                {isloadingMore ? <LoadingScreen/> : ''}
                 <Text style={styles.itemTitle}>{data.current_page} of {data.max_page}</Text>
             </View>
         </View>
